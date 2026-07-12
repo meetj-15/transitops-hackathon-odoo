@@ -20,7 +20,8 @@ export const validateCreateTrip = (req, res, next) => {
     req.body = createTripSchema.parse(req.body);
     next();
   } catch (err) {
-    return res.status(400).json({ success: false, error: { code: "VALIDATION_ERROR", message: err.errors[0]?.message } });
+    const message = err.issues?.[0]?.message || err.errors?.[0]?.message || "Invalid trip data";
+    return res.status(400).json({ success: false, error: { code: "VALIDATION_ERROR", message } });
   }
 };
 
@@ -29,6 +30,7 @@ export const validateCompleteTrip = (req, res, next) => {
     req.body = completeTripSchema.parse(req.body);
     next();
   } catch (err) {
-    return res.status(400).json({ success: false, error: { code: "VALIDATION_ERROR", message: err.errors[0]?.message } });
+    const message = err.issues?.[0]?.message || err.errors?.[0]?.message || "Invalid trip completion data";
+    return res.status(400).json({ success: false, error: { code: "VALIDATION_ERROR", message } });
   }
 };

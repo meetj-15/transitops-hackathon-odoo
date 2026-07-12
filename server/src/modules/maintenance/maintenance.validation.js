@@ -13,6 +13,7 @@ export const validateMaintenance = (req, res, next) => {
     req.body = maintenanceSchema.parse(req.body);
     next();
   } catch (err) {
-    return res.status(400).json({ success: false, error: { code: "VALIDATION_ERROR", message: err.errors[0]?.message } });
+    const message = err.issues?.[0]?.message || err.errors?.[0]?.message || "Invalid maintenance data";
+    return res.status(400).json({ success: false, error: { code: "VALIDATION_ERROR", message } });
   }
 };

@@ -14,9 +14,10 @@ export const validateDriver = (req, res, next) => {
     req.body = driverSchema.parse(req.body);
     next();
   } catch (err) {
+    const message = err.issues?.[0]?.message || err.errors?.[0]?.message || "Invalid driver data";
     return res.status(400).json({
       success: false,
-      error: { code: "VALIDATION_ERROR", message: err.errors[0]?.message || "Invalid driver data" }
+      error: { code: "VALIDATION_ERROR", message }
     });
   }
 };
