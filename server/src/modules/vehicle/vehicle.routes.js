@@ -7,10 +7,10 @@ import {
   validateUpdateVehicle,
 } from "./vehicle.validation.js";
 
-const router2 = express.Router();
+const vehicleRoutes = express.Router();
 
 
-router2.post(
+vehicleRoutes.post(
   "/",
   authMiddleware,
   authorize("Fleet Manager"),
@@ -18,19 +18,19 @@ router2.post(
   vehicleController.createVehicle
 );
 
-router2.get(
+vehicleRoutes.get(
   "/",
   authMiddleware,
   vehicleController.getAllVehicles
 );
 
-router2.get(
+vehicleRoutes.get(
   "/:id",
   authMiddleware,
   vehicleController.getVehicleById
 );
 
-router2.put(
+vehicleRoutes.put(
   "/:id",
   authMiddleware,
   authorize("Fleet Manager"),
@@ -38,11 +38,11 @@ router2.put(
   vehicleController.updateVehicle
 );
 
-router2.delete(
+vehicleRoutes.delete(
   "/:id",
   authMiddleware,
   authorize("Fleet Manager"),
   vehicleController.deleteVehicle
 );
 
-export default router2;
+export default vehicleRoutes;

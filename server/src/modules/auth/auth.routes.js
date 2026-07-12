@@ -6,12 +6,12 @@ import {
   validateLogin,
 } from "./auth.validation.js";
 
-const router = express.Router();
+const authRoutes = express.Router();
 
-router.post("/register",validateRegister, authController.register);
+authRoutes.post("/register",validateRegister, authController.register);
 
-router.post("/login",validateLogin, authController.login);
+authRoutes.post("/login",validateLogin, authController.login);
 
-router.get("/me", authMiddleware, authController.getMe);
+authRoutes.get("/me", authMiddleware, authController.getMe);
 
-export default router;
+export default authRoutes;

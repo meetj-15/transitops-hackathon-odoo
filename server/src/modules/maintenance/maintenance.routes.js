@@ -4,11 +4,11 @@ import authMiddleware from "../../middleware/auth.middleware.js";
 import authorize from "../../middleware/role.middleware.js";
 import { validateMaintenance } from "./maintenance.validation.js";
 
-const router = express.Router();
+const maintenanceRoutes = express.Router();
 
-router.use(authMiddleware);
-router.get("/", maintenanceController.getLogs);
-router.post("/", authorize("Admin", "Fleet Manager", "Safety Officer"), validateMaintenance, maintenanceController.createLog);
-router.put("/:id/close", authorize("Admin", "Fleet Manager", "Safety Officer"), maintenanceController.closeLog);
+maintenanceRoutes.use(authMiddleware);
+maintenanceRoutes.get("/", maintenanceController.getLogs);
+maintenanceRoutes.post("/", authorize("Fleet Manager", "Safety Officer"), validateMaintenance, maintenanceController.createLog);
+maintenanceRoutes.put("/:id/close", authorize( "Fleet Manager", "Safety Officer"), maintenanceController.closeLog);
 
-export default router;
+export default maintenanceRoutes;
