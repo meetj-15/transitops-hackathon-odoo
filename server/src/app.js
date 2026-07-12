@@ -4,11 +4,11 @@ import cors from "cors";
 // Import all module routes
 import authRoutes from "./modules/auth/auth.routes.js";
 import vehicleRoutes from "./modules/vehicle/vehicle.routes.js";
-import driverRoutes from "./modules/drivers/driver.routes.js";
-import tripRoutes from "./modules/trips/trip.routes.js";
+import driverRoutes from "./modules/driver/driver.routes.js";
+import tripRoutes from "./modules/trip/trip.routes.js";
 import maintenanceRoutes from "./modules/maintenance/maintenance.routes.js";
 import fuelRoutes from "./modules/fuel/fuel.routes.js";
-import expenseRoutes from "./modules/expenses/expense.routes.js";
+import expenseRoutes from "./modules/expense/expense.routes.js";
 import dashboardRoutes from "./modules/dashboard/dashboard.routes.js";
 
 const app = express();
