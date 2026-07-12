@@ -1,14 +1,16 @@
 import express from "express";
 import dotenv from "dotenv";
 import pool from "./config/db.js";
-import router from "./modules/auth/auth.routes.js";
+import router1 from "./modules/auth/auth.routes.js";
+import router2 from "./modules/vehicle/vehicle.routes.js"
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(express.json());
 
-app.use("/api/auth",router);
+app.use("/api/auth",router1);
+app.use("/api/vehicles",router2)
 // Test database connection
 app.get("/", async (req, res) => {
     try {
