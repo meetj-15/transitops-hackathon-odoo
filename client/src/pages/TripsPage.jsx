@@ -26,6 +26,14 @@ const initialTripValues = {
   revenue: "0",
 };
 
+function isLocalTrip(row) {
+  return String(row.id ?? "").startsWith("local-");
+}
+
+function isNetworkFailure(error) {
+  return !error.response;
+}
+
 export default function TripsPage() {
   const [records, setRecords] = useState(trips);
   const [vehicleOptions, setVehicleOptions] = useState(vehicles);
@@ -160,9 +168,14 @@ export default function TripsPage() {
       const response = await tripsApi.dispatch(row.id);
       mergeTrip(unwrapApiData(response, row));
       setLoadNotice("");
-    } catch {
+    } catch (error) {
+      if (!isLocalTrip(row) && !isNetworkFailure(error)) {
+        setLoadNotice(getApiErrorMessage(error, "Could not dispatch trip."));
+        return;
+      }
+
       mergeTrip({ ...row, status: "Dispatched" });
-      setLoadNotice("Backend unavailable, so the trip status changed locally for demo only.");
+      setLoadNotice("This trip was updated locally for demo only.");
     }
   }
 
@@ -181,9 +194,14 @@ export default function TripsPage() {
       });
       mergeTrip(unwrapApiData(response, row));
       setLoadNotice("");
-    } catch {
+    } catch (error) {
+      if (!isLocalTrip(row) && !isNetworkFailure(error)) {
+        setLoadNotice(getApiErrorMessage(error, "Could not complete trip."));
+        return;
+      }
+
       mergeTrip({ ...row, status: "Completed" });
-      setLoadNotice("Backend unavailable, so the trip was completed locally for demo only.");
+      setLoadNotice("This trip was completed locally for demo only.");
     }
   }
 
@@ -192,9 +210,14 @@ export default function TripsPage() {
       const response = await tripsApi.cancel(row.id);
       mergeTrip(unwrapApiData(response, row));
       setLoadNotice("");
-    } catch {
+    } catch (error) {
+      if (!isLocalTrip(row) && !isNetworkFailure(error)) {
+        setLoadNotice(getApiErrorMessage(error, "Could not cancel trip."));
+        return;
+      }
+
       mergeTrip({ ...row, status: "Cancelled" });
-      setLoadNotice("Backend unavailable, so the trip was cancelled locally for demo only.");
+      setLoadNotice("This trip was cancelled locally for demo only.");
     }
   }
 
