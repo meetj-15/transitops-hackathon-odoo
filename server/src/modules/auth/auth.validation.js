@@ -1,36 +1,34 @@
-export const validateRegister = ({
-  name,
-  email,
-  password,
-  role,
-}) => {
+// auth.validation.js
+
+export const validateRegister = (req, res, next) => {
+  const { name, email, password, role } = req.body;
+
   if (!name || !email || !password || !role) {
-    throw new Error("All fields are required");
+    return res.status(400).json({
+      success: false,
+      message: "All fields are required",
+    });
   }
 
   if (password.length < 8) {
-    throw new Error(
-      "Password must be at least 8 characters"
-    );
+    return res.status(400).json({
+      success: false,
+      message: "Password must be at least 8 characters",
+    });
   }
 
-  const roles = [
-    "Fleet Manager",
-    "Driver",
-    "Safety Officer",
-    "Financial Analyst",
-  ];
-
-  if (!roles.includes(role)) {
-    throw new Error("Invalid role");
-  }
+  next();
 };
 
-export const validateLogin = ({
-  email,
-  password,
-}) => {
+export const validateLogin = (req, res, next) => {
+  const { email, password } = req.body;
+
   if (!email || !password) {
-    throw new Error("Email and password are required");
+    return res.status(400).json({
+      success: false,
+      message: "Email and password are required",
+    });
   }
+
+  next();
 };
